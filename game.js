@@ -7,9 +7,9 @@ let randomNumber = Math.floor(Math.random() * 100) + 1;
 and are used to insert values into the paragraphs later on in the code 
 (note how they are inside a <div> element, which is itself used to select all three later on for resetting,
  when we restart the game): */
-const guesses = document.querySelector (".guesses");
+const guesses = document.querySelector(".guesses");
 const lastResult = document.querySelector(".lastResult");
-const lowOrHi = document.querySelector (".lowOrHigh");
+const lowOrHi = document.querySelector(".lowOrHigh");
 
 //The next two constants store references to the form text input and submit button and are used to control submitting the guess later on.
 const guessSubmit = document.querySelector(".guessSubmit");
@@ -31,7 +31,7 @@ function checkGuess() {
         guesses.textContent = "Previous guesses:";
     }
 //Next, we use a template literal to append the current userGuess value onto the end of the guesses paragraph, with a blank space in between.
-    guesses.textContent = `${guesses.textContent} ${userGuess}`;
+    guesses.textContent = `${guesses.textContent} ${userGuess},`;
 
 /*The first if block checks whether the user's guess is equal to the randomNumber set at the top of our JavaScript.
 If it is, the player has guessed correctly and the game is won,
@@ -48,7 +48,7 @@ and run a function called setGameOver() */
         lastResult.textContent = "!!!GAME OVER!!!";
         lastResult.style.backgroundColor = "red";
         lowOrHi.textContent = "";
-        setGameOver()
+        setGameOver();
 
 /*The final block chained onto the end of this code (the else { }) contains code that is only run if neither of the other two tests returns true (i.e. the player didn't guess right, but they have more guesses left).
 In this case we tell them they are wrong, then we perform another conditional test to check whether the guess was higher or lower than the answer, displaying a further message as appropriate to tell them higher or lower. */
@@ -59,7 +59,7 @@ In this case we tell them they are wrong, then we perform another conditional te
             lowOrHi.textContent = "Last guess was too low";
 
         }else if (userGuess > randomNumber) {
-            lowOrHi.textContent("Last guess was too high");
+            lowOrHi.textContent = "Last guess was too high";
         }
     }
 
@@ -67,4 +67,41 @@ In this case we tell them they are wrong, then we perform another conditional te
     guessCount++;
     guessField.value = "";
     guessField.focus();
+}
+
+guessSubmit.addEventListener("click", checkGuess);
+
+//The first two lines disable the form text input and button by setting their disabled properties to true. This is necessary, because if we didn't, the user could submit more guesses after the game is over, which would mess things up.
+function setGameOver() {
+    guessField.disabled = true;
+    guessSubmit.disabled = true;
+//The next three lines generate a new <button> element, set its text label to "Start new game", and add it to the bottom of our existing HTML.
+    resetButton = document.createElement ("button");
+    resetButton.textContent = "Start new game";
+    document.body.append(resetButton);
+    //The final line sets an event listener on our new button so that when it is clicked, a function called resetGame() is run.
+    resetButton.addEventListener("click", resetButton);
+}
+//Puts the guessCount back down to 1.
+function resetGame() {
+    guessCount = 1;
+
+//Empties all the text out of the information paragraphs. We select all paragraphs inside <div class="resultParas"></div>, then loop through each one, setting their textContent to '' (an empty string).
+    const resetParas = document.querySelectorAll(".resultsParas p");
+    for (const resetPara of resetParas) {
+        resetPara.textContent = "";
+    }
+//Removes the reset button from our code.
+    resetButton.parentNode.removeChild(resetButton);
+
+//Enables the form elements, and empties and focuses the text field, ready for a new guess to be entered.
+    guessField.disabled = false;
+    guessSubmit.disabled = false;
+    guessField.value = "";
+    guessField.focus();
+
+//Removes the background color from the lastResult paragraph.
+    lastResult.style.backgroundColor = "white";
+//Generates a new random number so that you are not just guessing the same number again!
+    randomNumber = Math.floor(Math.random() * 100) + 1;
 }
