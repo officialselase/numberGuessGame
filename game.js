@@ -80,7 +80,7 @@ function setGameOver() {
     resetButton.textContent = "Start new game";
     document.body.append(resetButton);
     //The final line sets an event listener on our new button so that when it is clicked, a function called resetGame() is run.
-    resetButton.addEventListener("click", resetButton);
+    resetButton.addEventListener("click", resetGame);
 }
 //Puts the guessCount back down to 1.
 function resetGame() {
