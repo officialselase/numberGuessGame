@@ -18,6 +18,8 @@ const guessField = document.querySelector(".guessField");
 //Our final two variables store a guess count of 1 (used to keep track of how many guesses the player has had), and a reference to a reset button that doesn't exist yet (but will later).
 let guessCount = 1;
 let resetButton;
+//This line uses the focus() method to automatically put the text cursor into the <input> text field as soon as the page loads, meaning that the user can start typing their first guess right away
+guessField.focus();
 
 /*The first line declares a variable called userGuess and sets its value to the current value entered inside the text field.
 We also run this value through the built-in Number() constructor, just to make sure the value is definitely a number.
@@ -76,7 +78,7 @@ function setGameOver() {
     guessField.disabled = true;
     guessSubmit.disabled = true;
 //The next three lines generate a new <button> element, set its text label to "Start new game", and add it to the bottom of our existing HTML.
-    resetButton = document.createElement ("button");
+    resetButton = document.createElement("button");
     resetButton.textContent = "Start new game";
     document.body.append(resetButton);
     //The final line sets an event listener on our new button so that when it is clicked, a function called resetGame() is run.
@@ -87,7 +89,7 @@ function resetGame() {
     guessCount = 1;
 
 //Empties all the text out of the information paragraphs. We select all paragraphs inside <div class="resultParas"></div>, then loop through each one, setting their textContent to '' (an empty string).
-    const resetParas = document.querySelectorAll(".resultsParas p");
+    const resetParas = document.querySelectorAll(".resultParas p");
     for (const resetPara of resetParas) {
         resetPara.textContent = "";
     }
