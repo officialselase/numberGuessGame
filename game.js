@@ -9,7 +9,7 @@ and are used to insert values into the paragraphs later on in the code
  when we restart the game): */
 const guesses = document.querySelector(".guesses");
 const lastResult = document.querySelector(".lastResult");
-const lowOrHi = document.querySelector(".lowOrHigh");
+const lowOrHi = document.querySelector(".lowOrHi");
 
 //The next two constants store references to the form text input and submit button and are used to control submitting the guess later on.
 const guessSubmit = document.querySelector(".guessSubmit");
@@ -33,7 +33,8 @@ function checkGuess() {
         guesses.textContent = "Previous guesses:";
     }
 //Next, we use a template literal to append the current userGuess value onto the end of the guesses paragraph, with a blank space in between.
-    guesses.textContent = `${guesses.textContent} ${userGuess},`;
+    //guesses.textContent = `${guesses.textContent} ${userGuess},`;
+    guesses.textContent += userGuess + " ";
 
 /*The first if block checks whether the user's guess is equal to the randomNumber set at the top of our JavaScript.
 If it is, the player has guessed correctly and the game is won,
